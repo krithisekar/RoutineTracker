@@ -1,0 +1,94 @@
+html, body {
+    background-color: rgba(9, 9, 9, 0.91);
+    opacity: 0.8;
+    color:  rgb(252, 251, 251);
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+}
+#routineIcon{
+    width: 200px ;
+    height: 200px;
+}
+label{
+    color: rgb(252, 251, 251); 
+    margin-bottom: 10px; 
+    display: block; 
+    font-size: large;
+}
+.textboxNewRoutine{
+    border-radius: 8px;
+  /*  min-height: 60px;
+    min-width: 400px;*/
+    align-items: center;
+    text-align: center;
+    font-size: large;
+    color: blue;
+}
+.dropDown{
+    color: blue;
+   /* min-height: 55px;
+    min-width: 200px;*/
+    text-align: center;
+    font-size:medium;
+    border-radius: 8px;
+    
+  
+}
+.button{
+    color: blue;
+    text-align: center;
+    font-size:medium;
+    border-radius: 5px;
+    margin: auto;
+}
+.setTime{
+    display: flexbox;
+    align-items: center;
+    text-align: center;
+    font-size:large;
+    border-radius: 8px;
+    margin-top: 10px;
+    justify-content: center;
+}
+.routine-form {
+    text-align: center;
+}
+.routine-item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+}
+
+.routine-text {
+    /* Add styling as needed, e.g., margin-right for spacing */
+    margin-right: 30px;
+    align-items: center;
+    margin-left: 30px;
+    color: white;
+    justify-content: space-evenly;
+}
+.routine-List{      
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+}
+form-element{
+    margin: auto;
+    
+}
+span.setTime {
+    color: white;
+    
+    /* Add background color if necessary, and other styles for the displayed time */
+}
