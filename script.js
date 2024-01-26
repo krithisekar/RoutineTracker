@@ -35,6 +35,12 @@ addEntry.addEventListener("click", () => {
         const timeValue = addTime.value;
         selectedTime.textContent = timeValue;
         item.appendChild(selectedTime);
+        //adding changes for passing values to DB
+		const data = {
+			addRoutines: routine,
+			addDay: daySelect,
+			timeValue: addTime
+		};
         const doneButton = document.createElement("button");
         doneButton.classList.add("Done");
         doneButton.style.color = "blue";
