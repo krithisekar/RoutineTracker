@@ -1,24 +1,52 @@
-html, body {
-    background-color: rgba(9, 9, 9, 0.91);
-    opacity: 0.8;
-    color:  rgb(252, 251, 251);
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
 }
-#routineIcon{
-    max-width: 50% ;
-    max-height: 50%;
+
+.routine-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
 }
+
+.routine-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.routine-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .button {
-    position: relative;
-    top:50%;
-    background-color:#2e18f6f8;
+    background-color: #4CAF50;
     color: white;
-    font-size: medium;
-    border-radius: 10px;
+    padding: 10px 20px;
     border: none;
-    box-shadow: 3px 3px rgb(44, 52, 53);
-    min-height: 60px;
-    min-width: 800px;
-    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.routineList {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
 }
 /* Mobile specific styles */
 @media only screen and (max-width: 768px) {
