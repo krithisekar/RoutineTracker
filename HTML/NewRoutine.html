@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Routine Tracker</title>
-    <link rel="stylesheet" href="../RoutineTracker/CSS/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
    <h1> Add a new routine</h1>
     <main>
         <form id="routineForm" class="routine-form">
-            <label for="routinedate">Date:</label>
+            <label for="routinedate" class="setDate">Date:</label>
             <input type="date" id="routinedate" name="routinedate" required><br><br>
 
             <label for="routineTime" class="setTime">Time:</label>
@@ -21,13 +21,18 @@
             <label for="routine" class="form-element">Enter your New Routine:</label>
             <input type="text" class="textboxNewRoutine" id="routine" placeholder="Enter your NewRoutine">
             
-            <button type="submit" id="add-routine-btn" class="button"><b>+</b></button>
+            <button type="submit" id="add-routine-btn" class="button"><b>Add</b></button>
             <br><br><br>
         </form>
+
+        <h2>View routines</h2>
+        <label for="fetchDate">Select Date:</label>
+        <input type="date" id="fetchDate" name="fetchDate">
+        <button type="button" id = "fetchEventsBtn" onclick="fetchEvents(document.getElementById('fetchDate').value)">Fetch routines</button>
         <div class="routineList" id="routine-List">
         </div>
-        <script src="../script.js"></script>
     </main>
+    <script src="/script.js"></script>
 </body>
 
 </html>
