@@ -36,24 +36,30 @@ func init() {
 		panic(("TABLE_NAME environment variable required"))
 	}
 }
-
+func getCommonHeaders() map[string]string {
+	return map[string]string{
+		"Access-Control-Allow-Origin":  "*", // Replace with your S3 website URL in production
+		"Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+		"Access-Control-Allow-Headers": "Content-Type",
+		"Content-Type":                 "application/json",
+	}
+}
 func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Printf("HandleRequest() invoked via request of type '%s' and path '%s' \n", request.HTTPMethod, request.Path)
 	switch request.HTTPMethod {
 	case "POST":
 		return addRoutineHandler(request)
 	case "GET":
-		return getRoutinesHandler((request))
+		fmt.Println("Incoming request matched the HTTP verb GET")
+		return getRoutinesHandler(request)
 	case "OPTIONS":
 		return handleOptionsRequest()
 	default:
+		fmt.Println("Couldn't match any HTTP Verbs and so, returning default response!")
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusMethodNotAllowed,
-			Headers: map[string]string{
-				"Access-Control-Allow-Origin":  "https://myroutineapp.s3.ap-south-1.amazonaws.com",
-				"Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-				"Access-Control-Allow-Headers": "Content-Type",
-			},
-			Body: `{"error":"Method not allowed"}`,
+			Headers:    getCommonHeaders(),
+			Body:       `{"error":"Method not allowed"}`,
 		}, nil
 	}
 }
@@ -65,6 +71,7 @@ func addRoutineHandler(request events.APIGatewayProxyRequest) (events.APIGateway
 		fmt.Println("Error unmarshalling request:", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
+			Headers:    getCommonHeaders(),
 			Body:       `{"error":"Invalid request"}`,
 		}, nil
 	}
@@ -74,6 +81,7 @@ func addRoutineHandler(request events.APIGatewayProxyRequest) (events.APIGateway
 		fmt.Println("Error marshalling routine:", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
+			Headers:    getCommonHeaders(),
 			Body:       `{"error":"Failed to process routine"}`,
 		}, nil
 	}
@@ -88,21 +96,25 @@ func addRoutineHandler(request events.APIGatewayProxyRequest) (events.APIGateway
 		fmt.Println("Error putting into DynamoDB", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
+			Headers:    getCommonHeaders(),
 			Body:       `{"error":"failed to add routine"}`,
 		}, nil
 	}
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusCreated,
+		Headers:    getCommonHeaders(),
 		Body:       `{"message":"Routine added successfully"}`,
 	}, nil
 }
 
 func getRoutinesHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Println("getRoutinesHandler() invoked..")
 	date, exists := request.QueryStringParameters["date"]
 	if !exists || date == "" {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
+			Headers:    getCommonHeaders(),
 			Body:       `{"error":"Missing date query parameter"}`,
 		}, nil
 	}
@@ -147,13 +159,8 @@ func getRoutinesHandler(request events.APIGatewayProxyRequest) (events.APIGatewa
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Headers: map[string]string{
-			"Content-Type":                 "application/json",
-			"Access-Control-Allow-Origin":  "https://myroutineapp.s3.ap-south-1.amazonaws.com",
-			"Access-Control-Allow-Methods": "GET,POST",
-			"Access-Control-Allow-Headers": "Content-Type",
-		},
-		Body: string(responseBody),
+		Headers:    getCommonHeaders(),
+		Body:       string(responseBody),
 	}, nil
 
 }
@@ -161,13 +168,8 @@ func getRoutinesHandler(request events.APIGatewayProxyRequest) (events.APIGatewa
 func handleOptionsRequest() (events.APIGatewayProxyResponse, error) {
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Headers: map[string]string{
-			"Access-Control-Allow-Origin":  "https://myroutineapp.s3.ap-south-1.amazonaws.com",
-			"Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-			"Access-Control-Allow-Headers": "Content-Type",
-			"Access-Control-Max-Age":       "3000",
-		},
-		Body: "",
+		Headers:    getCommonHeaders(),
+		Body:       "",
 	}, nil
 }
 func main() {

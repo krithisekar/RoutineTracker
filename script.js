@@ -42,7 +42,10 @@ addEntry.addEventListener("click", async(event) => {
 
     try {
         // Send data to the backend
-        await addRoutine(routineData);
+        const response = await addRoutine(routineData);
+        if (response.message) {
+            alert(response.message);
+        }
 
         // If successful, update the UI
         createRoutineElement(routineData);
@@ -128,13 +131,14 @@ function displayRoutines(routines) {
 }
 // Function to Add Routine to Backend
 async function addRoutine(routineData) {
-    const lambdaFunctionURL = 'https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws';
+    const lambdaFunctionURL = 'https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws/routines';
 
     const response = await fetch(lambdaFunctionURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        mode: 'cors',
         body: JSON.stringify(routineData)
     });
 
@@ -145,22 +149,17 @@ async function addRoutine(routineData) {
 
     return await response.json();
 }
-document.addEventListener('DOMContentLoaded', function() {
-    if (fetchEventsBtn) {
-        fetchEventsBtn.addEventListener('click', fetchRoutines);
-    } else {
-        console.error('fetchEventsBtn not found');
-    }
-});
+
 // Function to Fetch Routines from Backend
 async function fetchRoutines(selectedDate) {
-    const lambdaFunctionURL = `https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws`; 
+    const lambdaFunctionURL = `https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws/routines?date=${selectedDate}`; 
 
     const response = await fetch(lambdaFunctionURL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        mode: 'cors'
     });
 
     if (!response.ok) {
@@ -170,7 +169,22 @@ async function fetchRoutines(selectedDate) {
 
     return await response.json();
 }
+document.addEventListener('DOMContentLoaded', function() {
+    if (fetchEventsBtn) {
+        fetchEventsBtn.addEventListener('click', async () => {
+            const selectedDate = fetchDateInput.value.trim();
+            if (selectedDate === "") {
+                alert("Please select a date.");
+                return;
+            }
 
-
-
-
+            try {
+                const routines = await fetchRoutines(selectedDate);
+                displayRoutines(routines);
+            } catch (error) {
+                console.error('Error fetching routines:', error);
+                alert('Failed to fetch routines. Please try again.');
+            }
+        });
+    }
+});

@@ -22,14 +22,14 @@
             <label for="routine" class="form-element">Enter your New Routine:</label>
             <input type="text" class="textboxNewRoutine" id="routine" placeholder="Enter your NewRoutine">
             
-            <button type="submit" id="add-routine-btn" class="button"><b>Add</b></button>
+            <button type="button" id="add-routine-btn" class="button"><b>Add</b></button>
             <br><br><br>
         </form>
 
         <h2>View routines</h2>
         <label for="fetchDate">Select Date:</label>
         <input type="date" id="fetchDate" name="fetchDate">
-        <button type="button" id = "fetchEventsBtn" onclick="fetchEvents(document.getElementById('fetchDate').value)">Fetch routines</button>
+        <button type="button" id = "fetchEventsBtn">Fetch routines</button>
         <div class="routineList" id="routine-List">
         </div>
     </main>
