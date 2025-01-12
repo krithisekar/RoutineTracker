@@ -58,6 +58,7 @@ addEntry.addEventListener("click", async(event) => {
 
     //function for Add Routine
     function createRoutineElement(routine) {
+        console.log('Creating element for routine:',routine);
         const item = document.createElement("div");
         item.classList.add("routine", "dropDown", "setTime");
 
@@ -120,13 +121,18 @@ fetchEventsBtn.addEventListener("click", async () => {
 function displayRoutines(routines) {
     routineList.innerHTML = ''; // to clear existing routines
 
-    if (routines.length === 0) {
+    if (!Array.isArray(routines) || routines.length === 0) {
         routineList.innerHTML = `<p>No routines found for the selected date.</p>`;
         return;
     }
 
     routines.forEach(routine => {
-        createRoutineElement(routine);
+        const routineData = {
+        date: routine.date,
+        time: routine.time,
+        text: routine.text
+        };
+        createRoutineElement(routineData);
     });
 }
 // Function to Add Routine to Backend
@@ -152,7 +158,7 @@ async function addRoutine(routineData) {
 
 // Function to Fetch Routines from Backend
 async function fetchRoutines(selectedDate) {
-    const lambdaFunctionURL = `https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws/routines?date=${selectedDate}`; 
+    const lambdaFunctionURL = `https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws?date=${selectedDate}`; 
 
     const response = await fetch(lambdaFunctionURL, {
         method: 'GET',
@@ -167,7 +173,9 @@ async function fetchRoutines(selectedDate) {
         throw new Error(errorResponse.error || 'Failed to fetch routines.');
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log('Fetched data:', data);
+    return data;//check again
 }
 document.addEventListener('DOMContentLoaded', function() {
     if (fetchEventsBtn) {
