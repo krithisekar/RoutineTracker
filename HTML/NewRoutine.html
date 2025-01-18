@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div class="container">
    <h1> Add a new routine</h1>
     <main>
         <form id="routineForm" class="routine-form">
@@ -21,21 +22,23 @@
 
             <label for="routine" class="form-element">Enter your New Routine:</label>
             <input type="text" class="textboxNewRoutine" id="routine" placeholder="Enter your NewRoutine">
-            
+            <br><br>
             <button type="button" id="add-routine-btn" class="button"><b>Add</b></button>
             <br><br><br>
         </form>
-
+        <div class="view-routines-section">
         <h2>View routines</h2>
         <label for="fetchDate">Select Date:</label>
         <input type="date" id="fetchDate" name="fetchDate">
         <button type="button" id = "fetchEventsBtn">Fetch routines</button>
+    </div>
         <div class="routineList" id="routine-List">
             <h3>Your Routines</h3>
             <ul id="routine-list"></ul>
         </div>
     </main>
     <script src="/script.js"></script>
+</div>
 </body>
 
 </html>

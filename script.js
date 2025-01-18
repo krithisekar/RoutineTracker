@@ -64,18 +64,18 @@ addEntry.addEventListener("click", async(event) => {
 
         const dateSpan = document.createElement("span");
         dateSpan.classList.add("routine-date");
-        dateSpan.textContent = `Date:${routine.date}`;
+        dateSpan.textContent = `${routine.date} `;
         item.appendChild(dateSpan);
 
         const timeSpan = document.createElement("span");
         timeSpan.classList.add("routine-time");
-        timeSpan.textContent = `Time:${routine.time}`;
+        timeSpan.textContent = `${routine.time} `;
         item.appendChild(timeSpan);
 
         // Create the content for the new routine item
         const routineText = document.createElement("span");
         routineText.classList.add("routine-text");
-        routineText.textContent = `Routine: ${routine.text}`;
+        routineText.textContent = `${routine.text} `;
         item.appendChild(routineText);
 
         const doneButton = document.createElement("button");

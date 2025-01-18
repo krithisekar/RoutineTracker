@@ -1,55 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-}
-h1{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px;
 }
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+h1,h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .routine-form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: auto;
-}
-
-.routine-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.routine-form input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.button:hover {
-    background-color: #45a049;
 }
 
 .routineList {
-    max-width: 600px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
     margin: 20px auto;
-    padding: 10px;
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #fff;
 }
+
+#routine-list {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+}
+
 /* Mobile specific styles */
 @media only screen and (max-width: 768px) {
     .button {

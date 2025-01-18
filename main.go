@@ -57,7 +57,6 @@ func init() {
 
 func getCommonHeaders() map[string]string {
 	return map[string]string{
-		"Access-Control-Allow-Origin":  "*", // Replace with your S3 website URL in production
 		"Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 		"Access-Control-Allow-Headers": "Content-Type",
 		"Content-Type":                 "application/json",
