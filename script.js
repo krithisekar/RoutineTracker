@@ -1,4 +1,4 @@
-// DOM Elements
+require ('dotenv').config();
 const addRoutines = document.getElementById("routine");
 const addEntry = document.getElementById("add-routine-btn");
 const addDay = document.getElementById("routinedate")
@@ -7,7 +7,7 @@ const routineList = document.getElementById("routine-List");
 const routineForm = document.getElementById("routineForm")
 const fetchEventsBtn = document.getElementById("fetchEventsBtn");
 const fetchDateInput = document.getElementById("fetchDate");
-const eventsContainer = document.getElementById("eventsContainer");
+const lambdaBaseURL = process.env.LAMBDA_BASE_URL;
 
 //validation for input
 function validateInput() {
@@ -57,45 +57,54 @@ addEntry.addEventListener("click", async(event) => {
 });
 
     //function for Add Routine
-    function createRoutineElement(routine) {
+        function createRoutineElement(routine) {
         console.log('Creating element for routine:',routine);
         const item = document.createElement("div");
-        item.classList.add("routine", "dropDown", "setTime");
+        item.classList.add("routine-item");
 
-        const dateSpan = document.createElement("span");
-        dateSpan.classList.add("routine-date");
-        dateSpan.textContent = `${routine.date} `;
-        item.appendChild(dateSpan);
 
         const timeSpan = document.createElement("span");
         timeSpan.classList.add("routine-time");
-        timeSpan.textContent = `${routine.time} `;
-        item.appendChild(timeSpan);
+        timeSpan.textContent = routine.time;
+        
 
         // Create the content for the new routine item
         const routineText = document.createElement("span");
         routineText.classList.add("routine-text");
-        routineText.textContent = `${routine.text} `;
-        item.appendChild(routineText);
+        routineText.textContent = routine.text;
+        
 
         const doneButton = document.createElement("button");
         doneButton.classList.add("Done");
-        doneButton.style.color = "blue";
-        doneButton.innerHTML = "<b>Done</b>";
-        item.appendChild(doneButton);
+        doneButton.textContent = "Done";
 
-        //add entire item to routine list
-        routineList.appendChild(item);
+       item.appendChild(timeSpan);
+       item.appendChild(routineText);
+       item.appendChild(doneButton);
 
-        // Reset the input field
-        addRoutines.value = "";
-        addDay.value = "";
-        addTime.value ="";
-        // Event Listener for the Done Button
+       routineList.appendChild(item);
+
         doneButton.addEventListener("click", function () {
             item.style.textDecoration = "line-through";
+            doneButton.style.display = "none";
         });
     }
+    function formatDate(dateString) {
+        if (!dateString) {
+            console.error("formatDate received an undefined or empty dateString");
+            return "Invalid Date"; // Return a fallback or placeholder value
+        }
+        try {
+        const [year, month, day] = dateString.split("-");
+        if (!year || !month || !day) {
+            throw new Error("Invalid date format");
+        }
+        return `${day}/${month}/${year}`;
+    }catch (error) {
+        console.error("Error formatting date:", error);
+        return dateString; // Return original if parsing fails
+    }
+}
     // Event Listener for Fetching Routines
 fetchEventsBtn.addEventListener("click", async () => {
     const selectedDate = fetchDateInput.value.trim();
@@ -121,23 +130,23 @@ fetchEventsBtn.addEventListener("click", async () => {
 function displayRoutines(routines) {
     routineList.innerHTML = ''; // to clear existing routines
 
-    if (!Array.isArray(routines) || routines.length === 0) {
-        routineList.innerHTML = `<p>No routines found for the selected date.</p>`;
-        return;
-    }
+    if (!routines.length) return;
 
+    const dateHeader = document.createElement('h2');
+    dateHeader.classList.add('date-header');
+    dateHeader.textContent = formatDate(routines[0].date);
+    routineList.appendChild(dateHeader);
+    
     routines.forEach(routine => {
-        const routineData = {
-        date: routine.date,
+        createRoutineElement({
         time: routine.time,
         text: routine.text
-        };
-        createRoutineElement(routineData);
+        });
     });
 }
 // Function to Add Routine to Backend
 async function addRoutine(routineData) {
-    const lambdaFunctionURL = 'https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws/routines';
+    const lambdaFunctionURL = `${lambdaBaseURL}/routines`;
 
     const response = await fetch(lambdaFunctionURL, {
         method: 'POST',
@@ -158,7 +167,7 @@ async function addRoutine(routineData) {
 
 // Function to Fetch Routines from Backend
 async function fetchRoutines(selectedDate) {
-    const lambdaFunctionURL = `https://ir7vdtbdh4nyaq57zcpywanllm0qcghl.lambda-url.ap-south-1.on.aws?date=${selectedDate}`; 
+    const lambdaFunctionURL = `${lambdaBaseURL}?date=${selectedDate}`; 
 
     const response = await fetch(lambdaFunctionURL, {
         method: 'GET',

@@ -1,91 +1,204 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
-    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1e3c72, #2a5298); /* Gradient background */
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Container */
+.container {
+    max-width: 400px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Transparent white for contrast */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Header Section */
+h1, h2, h3 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+/* Form Styles */
+.routine-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.routine-form input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.routine-form input::placeholder {
+    color: #aaa;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button:hover {
+    background: #45a049;
+}
+
+/* Routine List Section */
+.routineList {
+    margin-top: 30px;
+}
+
+.routine-date-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.routine-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.routine-time, .routine-text {
+    font-size: 1rem;
+}
+
+.Done {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Done:hover {
+    background-color: #0056b3;
+}
+
+/*body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
     padding: 20px;
 }
 
 .container {
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-main {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-}
-
-h1,h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.routine-form {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    background-color: #f9f9f9;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.routine-form label,
+.view-routines-section label {
+    font-weight: bold;
 }
 
 .routineList {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
+    margin-top: 20px;
 }
 
-#routine-list {
-    width: 100%;
-    list-style: none;
+.routine-item {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 16px;
 }
 
-/* Mobile specific styles */
-@media only screen and (max-width: 768px) {
-    .button {
-         min-height: 60px;
-         min-width: 300px;
-         border-radius: 6px;
-    }
-    #routineIcon{
-        max-width: 60% ;
-        max-height: 45%;
-    }
-    html, body {
-        font-size: small;
-    }
+.routine-item:nth-child(odd) {
+    background-color: #2255ec;
+    color: white;
 }
+
+.routine-item:nth-child(even) {
+    background-color: #2255ec;
+    color: white;
+}
+
+.routine-date-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 20px 0 10px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.Done {
+    color: white;
+    background-color: #007bff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Done:hover {
+    background-color: #0056b3;
+}
+*/
